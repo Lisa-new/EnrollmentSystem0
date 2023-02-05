@@ -48,7 +48,7 @@ namespace EnrollmentSystem.Controllers
         // PUT: api/Student/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsers(int id, Student users)
+        public async Task<IActionResult> PutUsers(int id, Users users)
         {
             if (id != users.Student_Id)
             {
