@@ -1,5 +1,6 @@
 using EnrollmentSystem.Models;
 using Microsoft.EntityFrameworkCore;
+using TicketingAPI.Dapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +10,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddDbContext<APIDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString ("DevConnection")));
-
+builder.Services.AddCors();
+builder.Services.AddScoped<IBaseAccessLayer, BaseAccessLayer>();
+builder.Services.AddDbContext<APIDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -20,6 +21,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseHttpsRedirection();
 
